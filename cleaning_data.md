@@ -108,7 +108,7 @@ LEFT JOIN sales_report AS sr
 ON sbs.productsku = sr.productsku
 ORDER BY matching_sku
 ```
-This confirmed that there were no mismatches in the data, save for those 8 records that are not referenced anywhere else. As such, I deleted the table: 
+This confirmed that there were no mismatches in the data, save for those 8 records that are stored only in *sales_by_sku. I then deleted the table for being a waste of space: 
 ```
 DROP TABLE sales_by_sku;
 ```
