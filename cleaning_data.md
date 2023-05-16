@@ -13,11 +13,9 @@ ii) The "socialengagementtype" column in *analytics* is also only ever one value
 
 >#3. Monetary amounts in various columns were not formatted like currency, needing to be divided by 1,000,000 and rounded to two decimal points to better reflect what they are.
 
->#4: There is a lot of duplicate data in the *all_sessions* table, which had to be filtered out because duplicate data can skew any results I generate and call into question the quality of the data or my methods for parsing that data. 
+>#4: In the *all_sessions* table, country is sometimes labelled "(not set)", and city is sometimes either "(not set)" or "not available in demo dataset". Any "(not set)" values can easily be replaced with NULL, while the other city string may have to be changed to "N/A" for ease of reading.
 
->#5: In the *all_sessions* table, country is sometimes labelled "(not set)", and city is sometimes either "(not set)" or "not available in demo dataset". Any "(not set)" values can easily be replaced with NULL, while the other city string may have to be changed to "N/A" for ease of reading.
-
->#6: Formatting of product name entries in the *products*, *sales_reports*, and  is inconsistent; leading spaces are sometimes present,  
+>#5: Formatting of product name entries in the *products* *sales_reports* frequently has extraneous spaces, and for ease of access all product names can also be reduced to lower case.  
 
 <hr>
 
@@ -147,3 +145,5 @@ UPDATE analytics
 SET totaltransactionrevenue = ROUND(unit_price, 2),
 SET productprice = ROUND(revenue, 2)
 ```
+
+### Issue #4: Monetary Amounts
