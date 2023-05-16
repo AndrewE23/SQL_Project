@@ -3,17 +3,17 @@
 What issues will you address by cleaning the data?
 
 ### Specific Issues
->#1: There are many data fields that were largely or entirely empty (i.e. NULL), especially in the *all_sessions* table. Keeping them around would bog down loading and runtime speeds, as well as increase space used, and there would be little point anyway since data that is not available for use can not provide any meaningful insights. There were cases where a tiny fraction of a table's records had a value in these columns, but at that point there was still the issue of scale; I cannot extrapolate meaningful results from 30 values out of a total dataset of 15,000 records.
+>#1a: There are many data fields that were largely or entirely empty (i.e. NULL), especially in the *all_sessions* table. Keeping them around would bog down loading and runtime speeds, as well as increase space used, and there would be little point anyway since data that is not available for use can not provide any meaningful insights. There were cases where a tiny fraction of a table's records had a value in these columns, but at that point there was still the issue of scale; I cannot extrapolate meaningful results from 30 values out of a total dataset of 15,000 records.
 
->#2. Similarly, there were some columns where there was only one value stored, or else overwhelmingly one value and then a small portion that were NULL.<br> 
-a) The "currencycode" column in *all_sessions* was almost entirely filled with 'USD', and if it wasn't then entries simply left it as NULL. As such, my assumption is that everything is being sold in USD and this column was redundant.<br> 
-b) The "socialengagementtype" column in *analytics* is similarly only ever one value.
+>#1b. Similarly, there were some columns where there was only one value stored, or else overwhelmingly one value and then a small portion that were NULL.<br> 
+i) The "currencycode" column in *all_sessions* was almost entirely filled with 'USD', and if it wasn't then entries simply left it as NULL. As such, my assumption is that everything is being sold in USD and this column was redundant.<br> 
+ii) The "socialengagementtype" column in *analytics* is similarly only ever one value.
 
->#3. The *sales_by_sku* table, which contained two columns ("productsku" and "total_ordered"), was entirely redundant. I compared it with the three other tables that include a sku/productsku column and found that every record was present in at least one other table, with the exception of 8 records that had no matches in any other table. Since the table is worthless
+>#2. The *sales_by_sku* table, which contained two columns ("productsku" and "total_ordered"), was entirely redundant. I compared it with the three other tables that include a sku/productsku column and found that every record was present in at least one other table, with the exception of 8 records that had no matches in any other table. Since the table is worthless
 
->#4. Monetary amounts in various columns were not formatted like currency, needing to be divided by 1,000,000 and rounded to two decimal points to better reflect what they are.
+>#3. Monetary amounts in various columns were not formatted like currency, needing to be divided by 1,000,000 and rounded to two decimal points to better reflect what they are.
 
->#5: There is a lot of duplicate data in the *all_sessions* table, which had to be filtered out because duplicate data can skew any results I generate and call into question the quality of the data or my methods for parsing that data. 
+>#4: There is a lot of duplicate data in the *all_sessions* table, which had to be filtered out because duplicate data can skew any results I generate and call into question the quality of the data or my methods for parsing that data. 
 
 
 ### Other Consideratons
@@ -25,7 +25,7 @@ b) The "socialengagementtype" column in *analytics* is similarly only ever one v
 
 Below, provide the SQL queries you used to clean your data.
 
-### Step 1: Remove Irrelevant Data
+### Issue #1: Remove Irrelevant Data
 Focus: **all_sessions**<br>
 
 I initially checked to see what these columns contained:<br>
