@@ -4,7 +4,7 @@
 Ultimately, my goal is to transform the data that has been made available to me into a dataset that can be relied on for delivering hard results and solid insights. What this means is it needs to be cleaned up; duplicates removed, useless info purged, and inconsistencies made consistent. After that, I want to be able to use the data to reliably answer different questions I may have like: What products are the most purchased? How many people actually buy things as opposed to simply view products? 
 
 ## Process
-### Exploration
+### 1 - Assessment
 The very first thing I needed to do was to form an accurate definition of what the dataset represents in the context of ecommerce. It was easier to approach this on a per table basis:<br>
 > *all_sessions*: This provides user statistics about how each user accessed the site; i.e. What was their point of entry and did they view or buy anything (or anything else)?
 > 
@@ -18,16 +18,12 @@ The very first thing I needed to do was to form an accurate definition of what t
 
 Then, using a combination of LHL-provided and online reference materials for assistance, I devised I came up with a simple 5-step process for cleaning my data.<br>
 
-### Cleaning Process Stages
-**1. Remove irrelevant data (from the source)**, such as empty columns.<br>
-
-**2. Remove or filter duplicate data**, such as copied rows.<br>
-
-**3. Remedy data inconsistencies**, such as matching data values or types that have been entered inconsistently.<br>
-
-**4. Regulate data**, such as setting monetary values to one standard, dates to one format, etc.<br>
-
-**5. Resolve issues with data gaps**, whether that means filling in what NULL values I can with the data available or else filtering related results out, depending on what is needed of the data.<br>
+### 2 - Data Validation & Cleaning
+**a. Remove irrelevant data (from the source)**, such as empty columns.<br>
+**b. Remove or filter duplicate data**, such as copied rows.<br>
+**c. Remedy data inconsistencies**, such as matching data values or types that have been entered inconsistently.<br>
+**d. Regulate data**, such as setting monetary values to one standard, dates to one format, etc.<br>
+**e. Resolve issues with data gaps**, whether that means filling in what NULL values I can with the data available or else filtering related results out, depending on what is needed of the data.<br>
 > Note: In a work setting, I could also attempt to resolve data gap problems by seeking out the missing data (i.e. collecting more data to fill in any gaps present). This would be a validation stage, but is not part of my process for this project.
 
 
