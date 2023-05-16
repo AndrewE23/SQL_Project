@@ -57,7 +57,7 @@ There are only 272 entries that are NULL, and comparing the "productprice" field
 ```
 Column Deletion:<br>
 >ALTER TABLE all_sessions
-DROP COLUMN searchkeyword,
+DROP COLUMN searchkeyword, -- All NULL
 DROP COLUMN productrefundamount, -- All NULL
 DROP COLUMN itemquantity, -- All NULL
 DROP COLUMN itemrevenue, -- All NULL
