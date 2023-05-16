@@ -15,7 +15,9 @@ ii) The "socialengagementtype" column in *analytics* is also only ever one value
 
 >#4: There is a lot of duplicate data in the *all_sessions* table, which had to be filtered out because duplicate data can skew any results I generate and call into question the quality of the data or my methods for parsing that data. 
 
->#5: In the *all_sessions* table, country is sometimes maked "(not set)", and city is sometimes either "(not set)" or "not available in demo dataset". Any "(not set)" values can easily be replaced with NULL, while the other city string may have to be 
+>#5: In the *all_sessions* table, country is sometimes labelled "(not set)", and city is sometimes either "(not set)" or "not available in demo dataset". Any "(not set)" values can easily be replaced with NULL, while the other city string may have to be changed to "N/A" for ease of reading.
+
+>#6: Formatting of product name entries in the *products*, *sales_reports*, and  is inconsistent; leading spaces are sometimes present,  
 
 <hr>
 
@@ -117,5 +119,30 @@ This confirmed that there were no mismatches in the data, save for those 8 recor
 DROP TABLE sales_by_sku;
 ```
 
+### Issue #3: Monetary Amounts
+All monetary amounts are multiplied by 1,000,000 (i.e. prices and revenues), meaning I had to convert them to a more standard format.
 
+Update relevant analytics table numerics:
+```
+UPDATE analytics
+SET unit_price = (unit_price / 1000000),
+SET revenue = (revenue / 1000000);
+```
+Convert to decimal value with a precision of 2:
+```
+UPDATE analytics
+SET unit_price = ROUND(unit_price, 2),
+SET revenue = ROUND(revenue, 2)
+```
 
+Update relevant all_sessions table numerics:
+UPDATE all_sessions
+SET totaltransactionrevenue = (unit_price / 1000000),
+SET productprice = (revenue / 1000000);
+```
+Convert to decimal value with a precision of 2:
+```
+UPDATE analytics
+SET totaltransactionrevenue = ROUND(unit_price, 2),
+SET productprice = ROUND(revenue, 2)
+```
