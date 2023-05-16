@@ -8,7 +8,7 @@ Ultimately, my goal is to transform the data that has been made available to me 
 The very first thing I needed to do was to form an accurate definition of what the dataset represents in the context of ecommerce. It was easier to approach this on a per table basis:<br>
 > *all_sessions*: This provides user statistics about how each user accessed the site; i.e. What was their point of entry and did they view or buy anything (or anything else)?
 > 
-> *analytics*: This provides user statistics about how each user used the site, for how long, and whether they purchased something or not. This only contains data for Q2 of 2017 (May-01 to August-01), but contains largely identical data for every page they used.
+> *analytics*: This provides user statistics about how each user used the site, for how long, and whether they purchased something or not. This only contains data for Q2 of 2017 (May-01 to August-01), but contains largely identical data for every page a user visited.
 > 
 > *products*: This is a list of products that the retailer has provided and how page visitors felt about said products.
 > 
