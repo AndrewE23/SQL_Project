@@ -9,7 +9,7 @@ What issues will you address by cleaning the data?
 i) The "currencycode" column in *all_sessions* was almost entirely filled with 'USD', and if it wasn't then entries simply left it as NULL. As such, my assumption is that everything is being sold in USD and this column was redundant.<br> 
 ii) The "socialengagementtype" column in *analytics* is similarly only ever one value.
 
->#2. The *sales_by_sku* table, which contained two columns ("productsku" and "total_ordered"), was entirely redundant. I compared it with the three other tables that include a sku/productsku column and found that every record was present in at least one other table, with the exception of 8 records that had no matches in any other table. Since the table was worthless, I decided it would be better to simply delete it.
+>#2. The *sales_by_sku* table, which contained two columns ("productsku" and "total_ordered"), was entirely redundant. I first noticed that they were almost identical to two columns in the *sales_report* table, which prompted me to compare it with the three other tables that include a sku/productsku column. The verdict: All but 8 records had match in at least one other table. Since the table was worthless, I decided it would be better to simply delete it.
 
 >#3. Monetary amounts in various columns were not formatted like currency, needing to be divided by 1,000,000 and rounded to two decimal points to better reflect what they are.
 
@@ -75,7 +75,15 @@ DROP COLUMN socialengagementtype; -- Only a single kind of value
 ```
 
 ### Issue #2: sales_by_sku
-Since key variable "productsku" was also present in the *sales_report*, *products*, and *all_sessions* tables, I decided to set up a query to check for any keys in this table that were not present in at least one other table:<br>
+The two columns in *sales_by_sku* appear to be largely identical to two columns in *sales_report*, so I set up a query to identify missing/unmatching sku numbers as booleans:
+```
+SELECT sbs.*, sr.productsku IS NOT NULL AS matching_sku
+FROM sales_by_sku AS sbs
+LEFT JOIN sales_report AS sr
+ON sbs.productsku = sr.productsku
+ORDER BY matching_sku
+```
+This returned 8 false results. However, since key variable "productsku" was also present in the *products* and *all_sessions* tables, I decided to set up a query to check for any keys in this table that were not present in at least one other table. I did this by joining all four tables together:<br>
 ```
 SELECT
   sales_by_sku.*,
@@ -88,9 +96,21 @@ SELECT
   	WHERE sales_by_sku.productsku = all_sessions.productsku
   	OR sales_by_sku.productsku = sales_report.productsku
   	OR sales_by_sku.productsku = products.sku
-  ) AS matching_sku
+  ) AS matching_sku 
 FROM sales_by_sku
 ORDER BY matching_sku
+```
+The same 8 records I noticed before were returned by this query. To be completely safe, I also checked to make sure there were no mismatches in the "total_ordered" columns in both *sales_by_sku* and *sales_report*:
+```
+SELECT sbs.*, sr.name, sr.total_ordered IS NOT NULL AS matching_sku
+FROM sales_by_sku AS sbs
+LEFT JOIN sales_report AS sr
+ON sbs.productsku = sr.productsku
+ORDER BY matching_sku
+```
+This confirmed that there were no mismatches in the data, save for those 8 records that are not referenced anywhere else. As such, I deleted the table: 
+```
+DROP TABLE sales_by_sku;
 ```
 
 
