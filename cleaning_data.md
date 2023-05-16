@@ -15,7 +15,7 @@ ii) The "socialengagementtype" column in *analytics* is also only ever one value
 
 >#4: In the *all_sessions* table, country is sometimes labelled "(not set)", and city is sometimes either "(not set)" or "not available in demo dataset". Any "(not set)" values can easily be replaced with NULL, while the other city string may have to be changed to "N/A" for ease of reading.
 
->#5: Formatting of product name entries in the *products* *sales_reports* frequently has extraneous spaces, and for ease of access all product names can also be reduced to lower case.  
+>#5: Product name entries in the *products*, *sales_reports*, and *all_sessions* tables sometimes have extraneous spaces, and for ease of access all product names can also be reduced to lower case.  
 
 <hr>
 
@@ -145,5 +145,52 @@ UPDATE analytics
 SET totaltransactionrevenue = ROUND(unit_price, 2),
 SET productprice = ROUND(revenue, 2)
 ```
+### Issue #4: Non-City/Country Names
 
-### Issue #4: Monetary Amounts
+
+
+### Issue #5: Name Formatting Errors
+First, I checked for extra spaces in product names.
+```
+--Check for leading, extra spaces
+--Note that I adapted this query for all_sessions and products as well
+SELECT COUNT(name)
+FROM sales_report
+WHERE name ILIKE '%  %'
+OR name ILIKE ' %'
+```
+Then I removed them:<br>
+Remove extra spaces from "name" column in *sales_report*: 
+```
+--Remove leading spaces
+UPDATE sales_report
+SET name = TRIM(leading ' ' from name)
+```
+```
+--Remove double spaces
+UPDATE sales_report
+SET name = regexp_replace(name, '  ', ' ')
+```
+Do the same for *products*: 
+```
+--Remove leading spaces
+UPDATE products
+SET name = TRIM(leading ' ' from name)
+```
+```
+--Remove double spaces
+UPDATE products
+SET name = regexp_replace(name, '  ', ' ')
+```
+And then for *all_sessions*: 
+```
+--Remove leading spaces
+UPDATE all_sessions
+SET v2productname = TRIM(leading ' ' from v2productname)
+```
+```
+--Remove double spaces
+UPDATE all_sessions
+SET v2productname = regexp_replace(v2productname, '  ', ' ')
+```
+
