@@ -35,6 +35,7 @@ By Country:<br>
 "Australia"<br>
 "Canada"<br>
 "Switzerland"<br>
+No other countries show up on the list.
 
 By City:<br>
 "San Francisco"<br>
