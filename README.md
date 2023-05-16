@@ -16,9 +16,9 @@ The very first thing I needed to do was to form an accurate definition of what t
 > 
 > *sales_by_sku*: This appears to be a trimmed sales report, organized by productsku.
 
-Then, using a combination of LHL-provided and online reference materials for assistance, I devised I came up with a simple 5-step process for cleaning my data.<br>
+Then, using a combination of LHL-provided and online reference materials for assistance, I devised a simple 5-step process for cleaning my data.<br>
 
-### 2 - Data Validation & Cleaning
+### 2 - Data Validation Process
 **a. Remove irrelevant data (from the source)**, such as empty columns.<br>
 **b. Remove or filter duplicate data**, such as copied rows.<br>
 **c. Remedy data inconsistencies**, such as matching data values or types that have been entered inconsistently.<br>
