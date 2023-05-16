@@ -136,6 +136,7 @@ SET revenue = ROUND(revenue, 2)
 ```
 
 Update relevant all_sessions table numerics:
+```
 UPDATE all_sessions
 SET totaltransactionrevenue = (unit_price / 1000000),
 SET productprice = (revenue / 1000000);
