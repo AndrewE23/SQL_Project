@@ -39,7 +39,7 @@ SELECT COUNT(*) FROM all_sessions
 --WHERE transactionid IS NOT NULL --All but 9 are NULL
 --WHERE searchkeyword IS NOT NULL --All but 31 are NULL
 ```
-The syntax provided here is because I checked each column individually, but wanted to keep ; un-comment one line at a time to replicate my process. 
+The syntax provided here is because I checked each column individually, but wanted to keep record of my queries; un-comment one line at a time to replicate my process. 
 
 I also wanted to check the "currencycode" column:<br>
 ```
