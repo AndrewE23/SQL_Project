@@ -56,9 +56,9 @@ FROM all_sessions
 ```
 There are only 272 entries that are NULL, and comparing the "productprice" field in several of these results with other entries allowed me to carry on with the assumption that all items are being sold in USD. 
 
-```
 Column Deletion:<br>
->ALTER TABLE all_sessions
+```
+ALTER TABLE all_sessions
 DROP COLUMN searchkeyword,
 DROP COLUMN productrefundamount,
 DROP COLUMN itemquantity,
