@@ -11,8 +11,6 @@ What issues will you address by cleaning the data?
 
 
 
-## Process
-
 <hr>
 
 # Queries
@@ -24,7 +22,7 @@ Query:
 > **ALTER TABLE** [table_name]<br>
 > **DROP COLUMN** [column_name];
 
-This was a standardized query where I filled in the [table_name] and [column_name] fields based on which tables I wanted modify. In my case:
+This was a standardized query where I filled in the *[table_name]* and *[column_name]* fields based on which tables I wanted modify. In my case:
 
 **[table_name] = all_sessions**<br>
 [column_name] =<br>
