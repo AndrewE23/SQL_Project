@@ -28,28 +28,30 @@ Focus: **all_sessions**<br>
 
 I initially checked to see what these columns contained:<br>
 ```
+--Counting how many entries each column has; none surpass 40 records, out of over 15,000 total.
 SELECT COUNT(*) FROM all_sessions
---WHERE searchkeyword IS NOT NULL --All are NULL
---WHERE productrefundamount IS NOT NULL --All are NULL
---WHERE itemquantity IS NOT NULL --All are NULL
---WHERE itemrevenue IS NOT NULL --All are NULL
---WHERE transactionrevenue IS NOT NULL --All but 4 are NULL
---WHERE productrevenue IS NOT NULL --All but 4 are NULL
---WHERE transactionid IS NOT NULL --All but 9 are NULL
---WHERE searchkeyword IS NOT NULL --All but 31 are NULL
---WHERE productvariant IS NOT NULL --All but 40 are NULL
+--WHERE searchkeyword IS NOT NULL 
+--WHERE productrefundamount IS NOT NULL
+--WHERE itemquantity IS NOT NULL
+--WHERE itemrevenue IS NOT NULL
+--WHERE transactionrevenue IS NOT NULL
+--WHERE productrevenue IS NOT NULL
+--WHERE transactionid IS NOT NULL
+--WHERE searchkeyword IS NOT NULL
+--WHERE productvariant IS NOT NULL
 ```
 The syntax provided here is because I checked each column individually, but wanted to keep record of relevant queries; un-comment one line at a time to replicate my process. 
 
 I also wanted to check the "currencycode" column:<br>
 ```
-SELECT COUNT(*) AS totals --15134 total entries
+--I want the total number of entries (15134), the total number of currencycodes (14,862), and the number if distinct currencycodes (only one = 'USD')
+SELECT COUNT(*) AS totals
 FROM all_sessions
 UNION
-SELECT COUNT (DISTINCT currencycode) --Only one distinct type
+SELECT COUNT (DISTINCT currencycode)
 FROM all_sessions
 UNION
-SELECT COUNT(currencycode) --14,862 entries with a set value ('USD')
+SELECT COUNT(currencycode)
 FROM all_sessions
 ```
 There are only 272 entries that are NULL, and comparing the "productprice" field in several of these results with other entries allowed me to carry on with the assumption that all items are being sold in USD. 
@@ -57,16 +59,16 @@ There are only 272 entries that are NULL, and comparing the "productprice" field
 ```
 Column Deletion:<br>
 >ALTER TABLE all_sessions
-DROP COLUMN searchkeyword, -- All NULL
-DROP COLUMN productrefundamount, -- All NULL
-DROP COLUMN itemquantity, -- All NULL
-DROP COLUMN itemrevenue, -- All NULL
-DROP COLUMN transactionrevenue, -- All but 4 are NULL
-DROP COLUMN productrevenue, -- All but 4 are NULL
-DROP COLUMN transactionid, -- All but 9 are NULL
-DROP COLUMN ecommerce_option, -- All but 31 are NULL
-DROP COLUMN productvariant, -- All but 40 are NULL
-DROP COLUMN currencycode; -- Only 'USD' or NULL; safe assumption based on productprice is that everything is sold in USD
+DROP COLUMN searchkeyword,
+DROP COLUMN productrefundamount,
+DROP COLUMN itemquantity,
+DROP COLUMN itemrevenue,
+DROP COLUMN transactionrevenue,
+DROP COLUMN productrevenue,
+DROP COLUMN transactionid,
+DROP COLUMN ecommerce_option,
+DROP COLUMN productvariant,
+DROP COLUMN currencycode;
 ```
 
 Focus: **all_sessions**<br>
