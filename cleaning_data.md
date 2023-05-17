@@ -9,55 +9,21 @@ What issues will you address by cleaning the data?
 i) The "currencycode" column in *all_sessions* was almost entirely filled with 'USD', and if it wasn't then entries simply left it as NULL. As such, my assumption is that everything is being sold in USD and this column was redundant.<br> 
 ii) The "socialengagementtype" column in *analytics* is also only ever one value.
 
->#2. The *sales_by_sku* table, which contained two columns ("productsku" and "total_ordered"), was entirely redundant. I first noticed that they were almost identical to two columns in the *sales_report* table, which prompted me to compare it with the three other tables that include a sku/productsku column. The verdict: All but 8 records had match in at least one other table. Since the table was worthless, I decided it would be better to simply delete it.
+>#2. The *sales_by_sku* table, which contained two columns ("productsku" and "total_ordered"), was entirely redundant. I first noticed that they were almost identical to two columns in the *sales_report* table, which prompted me to compare it with the three other tables that include a sku/productsku column. The verdict: All but 8 records had match in at least one other table. Since the table was worthless, I decided it would be better to simply delete it.  
 
->#3: There are duplicate entries in the *analytics* table. They can be purged with a query involving "visitid" and "unit_price" in *analytics* or productprice in *all_sessions*.  
+>#3. Monetary amounts in various columns were not formatted like currency, needing to be divided by 1,000,000 and rounded to two decimal points to better reflect what they are.
 
->#4. Monetary amounts in various columns were not formatted like currency, needing to be divided by 1,000,000 and rounded to two decimal points to better reflect what they are.
+>#4: In the *all_sessions* table, country is sometimes labelled "(not set)", and city is sometimes either "(not set)" or "not available in demo dataset". Any "(not set)" values can easily be replaced with NULL, while the other city string may have to be changed to "N/A" for ease of reading.
 
->#5: In the *all_sessions* table, country is sometimes labelled "(not set)", and city is sometimes either "(not set)" or "not available in demo dataset". Any "(not set)" values can easily be replaced with NULL, while the other city string may have to be changed to "N/A" for ease of reading.
-
->#6: Product name entries in the *products*, *sales_reports*, and *all_sessions* tables sometimes have extraneous spaces, and for ease of access all product names can also be reduced to lower case. 
+>#5: Product name entries in the *products*, *sales_reports*, and *all_sessions* tables sometimes have extraneous spaces, and for ease of access all product names can also be reduced to lower case. 
 
 <hr>
 
 ## Queries
-
-Below, provide the SQL queries you used to clean your data.
+Below, provide the SQL queries you used to clean your data.<br>
 
 ### Issue #1: Remove Irrelevant Data
 Focus: **all_sessions**<br>
-
-I initially checked to see what these columns contained:<br>
-```
---Counting how many entries each column has; none surpass 40 records, out of over 15,000 total.
-SELECT COUNT(*) FROM all_sessions
---WHERE searchkeyword IS NOT NULL 
---WHERE productrefundamount IS NOT NULL
---WHERE itemquantity IS NOT NULL
---WHERE itemrevenue IS NOT NULL
---WHERE transactionrevenue IS NOT NULL
---WHERE productrevenue IS NOT NULL
---WHERE transactionid IS NOT NULL
---WHERE searchkeyword IS NOT NULL
---WHERE productvariant IS NOT NULL
-```
-The syntax provided here is because I checked each column individually, but wanted to keep record of relevant queries while conserving page space; un-comment one line at a time to replicate my process. 
-
-I also wanted to check the "currencycode" column:<br>
-```
---I want the total number of entries (15134), the total number of currencycodes (14,862), and the number if distinct currencycodes (only one = 'USD')
-SELECT COUNT(*) AS totals
-FROM all_sessions
-UNION
-SELECT COUNT (DISTINCT currencycode)
-FROM all_sessions
-UNION
-SELECT COUNT(currencycode)
-FROM all_sessions
-```
-There are only 272 entries that are NULL, and comparing the "productprice" field in several of these results with other entries allowed me to carry on with the assumption that all items are being sold in USD. 
-
 Column Deletion:<br>
 ```
 ALTER TABLE all_sessions
@@ -81,60 +47,13 @@ DROP COLUMN socialengagementtype; -- Only a single kind of value
 ```
 
 ### Issue #2: sales_by_sku
-The two columns in *sales_by_sku* appear to be largely identical to two columns in *sales_report*, so I set up a query to identify missing/unmatching sku numbers as booleans:
 ```
-SELECT sbs.*, sr.productsku IS NOT NULL AS matching_sku
-FROM sales_by_sku AS sbs
-LEFT JOIN sales_report AS sr
-ON sbs.productsku = sr.productsku
-ORDER BY matching_sku;
-```
-This returned 8 false results. However, since key variable "productsku" was also present in the *products* and *all_sessions* tables, I decided to set up a query to check for any keys in this table that were not present in at least one other table. I did this by joining all four tables together:<br>
-```
-SELECT
-  sales_by_sku.*,
-  EXISTS(
-  	SELECT 1 FROM all_sessions
-  	JOIN sales_report
-  	ON sales_by_sku.productsku = sales_report.productsku
-  	JOIN products
-  	ON sales_by_sku.productsku = products.sku
-  	WHERE sales_by_sku.productsku = all_sessions.productsku
-  	OR sales_by_sku.productsku = sales_report.productsku
-  	OR sales_by_sku.productsku = products.sku
-  ) AS matching_sku 
-FROM sales_by_sku
-ORDER BY matching_sku;
-```
-The same 8 records I noticed before were returned by this query. To be completely safe, I also checked to make sure there were no mismatches in the "total_ordered" columns in both *sales_by_sku* and *sales_report*:
-```
-SELECT sbs.*, sr.name, sr.total_ordered IS NOT NULL AS matching_sku
-FROM sales_by_sku AS sbs
-LEFT JOIN sales_report AS sr
-ON sbs.productsku = sr.productsku
-ORDER BY matching_sku;
-```
-This confirmed that there were no mismatches in the data, save for those 8 records that are stored only in *sales_by_sku*. I then deleted the table for being a waste of space: 
-```
+--The reason for this is thoroughly explained in QA.md.
 DROP TABLE sales_by_sku;
 ```
 
-### Issue #3: Deleting Duplicates
-I checked *sales_report*, *products*, and *all_sessions*, and *analytics*, and found duplicates only in *analytics* is cleaned with the following:
-```
---The item's price is meant to be the primary key, but visitid helps differentiate between users
-DELETE FROM analytics
-	WHERE EXISTS (select 1
-              	FROM analytics t2
-				JOIN all_sessions
-				ON t2.visitid = analytics.visitid
-              	WHERE t2.visitid = analytics.visitid and
-					t2.unit_price = all_sessions.productprice and
-                    	t2.ctid > analytics.ctid
-             	);
-```
 
-### Issue #4: Monetary Amounts
+### Issue #3: Monetary Amounts
 All monetary amounts are multiplied by 1,000,000 (i.e. prices and revenues), meaning I had to convert them to a more standard format.
 
 Update relevant analytics table numerics:
@@ -159,7 +78,7 @@ SET totaltransactionrevenue = (totaltransactionrevenue / 1000000), productprice 
 UPDATE all_sessions
 SET totaltransactionrevenue = ROUND(totaltransactionrevenue, 2), productprice = ROUND(productprice, 2);
 ```
-### Issue #5: Non-City/Country Names (all_sessions table)
+### Issue #4: Non-City/Country Names (all_sessions table)
 As stated above, some country names are listed as "(not set)", while some city names are either "(not set)" or "not available in demo dataset." For ease of use, all "(not set)" values should be NULL, while all "not available in demo dataset" values should be "N/A".
 
 NULL all instances of "(not set)":
@@ -183,7 +102,7 @@ WHERE city = 'not available in demo dataset';
 ```
 
 
-### Issue #6: Name Formatting Errors
+### Issue #5: Name Formatting Errors
 First, I checked for extra spaces in product names.
 ```
 --Check for leading, extra spaces
