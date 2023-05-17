@@ -28,7 +28,7 @@ I kept three key main considerations in mind:<br>
 **a. Remove irrelevant data (from the source)**, such as empty columns.<br>
 **b. Remove or filter duplicate data**, such as copied rows.<br>
 **c. Remedy data inconsistencies**, such as matching data values or types that have been entered inconsistently.<br>
-**d. Regulate data**, such as setting monetary values to one standard, dates to one format, etc.<br>
+**d. Regulate data**, such as setting monetary values to one standard, removing extraneous spaces, etc.<br>
 **e. Resolve issues with data gaps**, whether that means filling in what NULL values I can with the data available or else filtering related results out, depending on what is needed of the data.<br>
 > Note: In a work or research setting, I could also attempt to resolve data gap problems by seeking out the missing data (i.e. collecting more data to fill in any gaps present). 
 
