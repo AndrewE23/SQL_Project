@@ -82,38 +82,68 @@ GROUP BY alls.city
 ORDER BY avg DESC
 LIMIT 25
 ```
+```
+--by city
+SELECT 
+    alls.city,
+	alls.country, 
+    AVG(sr.total_ordered)
+FROM sales_report AS sr
+JOIN all_sessions AS alls
+ON sr.productsku = alls.productsku
+WHERE
+    city IS NOT NULL 
+    AND city != 'N/A'
+GROUP BY alls.city, alls.country
+ORDER BY avg DESC
+LIMIT 15
+```
 
-
-
-Answer:I adjusted the query to filter results for the top 25 for the sake of organization.<br>
+Answer:I adjusted the query to filter results for the top 25 for country and 15 for city, for the sake of organization.<br>
 
 By Country:<br>
-"Saudi Arabia" =	134.80
-"Kuwait" =	114.33
-"Honduras" =	112.00
-"Ethiopia" =	85.00
-"Laos" =	85.00
-"Oman" =	85.00
-"United Arab Emirates" =	65.13
-"Papua New Guinea" =	57.50
-"Croatia" =	57.44
-"South Korea" =	56.08
-"San Marino" =	50.00
-"Albania" =	50.00
-"Greece" =	47.55
-"Trinidad & Tobago" =	47.00
-"Hong Kong" =	44.88
-"Kazakhstan" =	43.00
-"Czechia" =	39.48
-"Italy" =	38.63
-"Guatemala" =	37.86
-"Denmark" =	37.56
-"Taiwan" =	36.31
-"Israel" =	35.88
-"Japan" =	35.60
-"Spain" =	35.30
-"Mexico" =	35.13
+"Saudi Arabia" =	134.80<br>
+"Kuwait" =	114.33<br>
+"Honduras" =	112.00<br>
+"Ethiopia" =	85.00<br>
+"Laos" =	85.00<br>
+"Oman" =	85.00<br>
+"United Arab Emirates" =	65.13<br>
+"Papua New Guinea" =	57.50<br>
+"Croatia" =	57.44<br>
+"South Korea" =	56.08<br>
+"San Marino" =	50.00<br>
+"Albania" =	50.00<br>
+"Greece" =	47.55<br>
+"Trinidad & Tobago" =	47.00<br>
+"Hong Kong" =	44.88<br>
+"Kazakhstan" =	43.00<br>
+"Czechia" =	39.48<br>
+"Italy" =	38.63<br>
+"Guatemala" =	37.86<br>
+"Denmark" =	37.56<br>
+"Taiwan" =	36.31<br>
+"Israel" =	35.88<br>
+"Japan" =	35.60<br>
+"Spain" =	35.30<br>
+"Mexico" =	35.13<br>
 
+By City:
+"Riyadh"	"Saudi Arabia"	319.00
+"Brno"	"Czechia"	319.00
+"Rexburg"	"United States"	250.50
+"Sacramento"	"United States"	189.00
+"Lisbon"	"Portugal"	189.00
+"Kalamazoo"	"United States"	105.00
+"Saint Petersburg"	"Russia"	101.25
+"Avon"	"United States"	100.00
+"Rome"	"Italy"	97.75
+"Longtan District"	"Taiwan"	97.00
+"Sherbrooke"	"Canada"	97.00
+"Nashville"	"United States"	94.00
+"Dubai"	"United Arab Emirates"	89.20
+"Shinjuku"	"Japan"	73.00
+"Pune"	"India"	71.08
 
 
 **Question 3: Is there any pattern in the types (product categories) of products ordered from visitors in each city and country?**
@@ -148,7 +178,7 @@ SQL Queries:
 
 
 
-Answer:
+Answer: This question is vague, so I'm taking "impact" to mean  
 
 
 
