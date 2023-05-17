@@ -11,11 +11,13 @@ ii) The "socialengagementtype" column in *analytics* is also only ever one value
 
 >#2. The *sales_by_sku* table, which contained two columns ("productsku" and "total_ordered"), was entirely redundant. I first noticed that they were almost identical to two columns in the *sales_report* table, which prompted me to compare it with the three other tables that include a sku/productsku column. The verdict: All but 8 records had match in at least one other table. Since the table was worthless, I decided it would be better to simply delete it.
 
->#3. Monetary amounts in various columns were not formatted like currency, needing to be divided by 1,000,000 and rounded to two decimal points to better reflect what they are.
+>#3: There are duplicate entries in the *all_sessions* and *analytics* tables.
 
->#4: In the *all_sessions* table, country is sometimes labelled "(not set)", and city is sometimes either "(not set)" or "not available in demo dataset". Any "(not set)" values can easily be replaced with NULL, while the other city string may have to be changed to "N/A" for ease of reading.
+>#4. Monetary amounts in various columns were not formatted like currency, needing to be divided by 1,000,000 and rounded to two decimal points to better reflect what they are.
 
->#5: Product name entries in the *products*, *sales_reports*, and *all_sessions* tables sometimes have extraneous spaces, and for ease of access all product names can also be reduced to lower case.  
+>#5: In the *all_sessions* table, country is sometimes labelled "(not set)", and city is sometimes either "(not set)" or "not available in demo dataset". Any "(not set)" values can easily be replaced with NULL, while the other city string may have to be changed to "N/A" for ease of reading.
+
+>#6: Product name entries in the *products*, *sales_reports*, and *all_sessions* tables sometimes have extraneous spaces, and for ease of access all product names can also be reduced to lower case. 
 
 <hr>
 
@@ -117,7 +119,30 @@ This confirmed that there were no mismatches in the data, save for those 8 recor
 DROP TABLE sales_by_sku;
 ```
 
-### Issue #3: Monetary Amounts
+### Issue #3: Deleting Duplicates
+I checked *sales_report*, *products*, and *all_sessions*, and *analytics*, and found duplicates only in the second of these two tables. :
+```
+--visitid is the primary key, so that is what gets filtered
+DELETE FROM all_sessions
+	WHERE exists (select 1
+              	from all_sessions t2
+              	where t2.visitid = all_sessions.visitid and
+                    	t2.ctid > all_sessions.ctid
+             	);
+```
+
+The *analytics* table is denser withfar more duplicate information, but we have two identifiers that help sort out duplicate records; pageviews, and unit_price. The number of distinct unit_price values for each visitid should match the value in the pageviews column.
+```
+SELECT COUNT(*) FROM analytics
+	where exists (select 1
+              	from analytics t2
+              	where t2.unit_price = analytics.unit_price and
+				      t2.visitid = analytics.visitid
+             	);
+```
+# ***WIP***
+
+### Issue #4: Monetary Amounts
 All monetary amounts are multiplied by 1,000,000 (i.e. prices and revenues), meaning I had to convert them to a more standard format.
 
 Update relevant analytics table numerics:
@@ -142,7 +167,7 @@ SET totaltransactionrevenue = (totaltransactionrevenue / 1000000), productprice 
 UPDATE all_sessions
 SET totaltransactionrevenue = ROUND(totaltransactionrevenue, 2), productprice = ROUND(productprice, 2);
 ```
-### Issue #4: Non-City/Country Names (all_sessions table)
+### Issue #5: Non-City/Country Names (all_sessions table)
 As stated above, some country names are listed as "(not set)", while some city names are either "(not set)" or "not available in demo dataset." For ease of use, all "(not set)" values should be NULL, while all "not available in demo dataset" values should be "N/A".
 
 NULL all instances of "(not set)":
@@ -166,7 +191,7 @@ WHERE city = '(not set)';
 ```
 
 
-### Issue #5: Name Formatting Errors
+### Issue #6: Name Formatting Errors
 First, I checked for extra spaces in product names.
 ```
 --Check for leading, extra spaces
