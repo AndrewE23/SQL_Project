@@ -73,7 +73,7 @@ DROP COLUMN productvariant,
 DROP COLUMN currencycode;
 ```
 
-Focus: **all_sessions**<br>
+Focus: **analytics**<br>
 ```
 ALTER TABLE analytics
 DROP COLUMN userid, -- All NULL
