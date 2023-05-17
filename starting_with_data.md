@@ -14,16 +14,16 @@ LIMIT 10
 ```
 
 Answer: 
->"Nest® Cam Outdoor Security Camera - USA" = 	1238496
-"Nest® Learning Thermostat 3rd Gen-USA - Stainless Steel" =	1225948
-"Nest® Cam Indoor Security Camera - USA" =	1204926
-"Google 17oz Stainless Steel Sport Bottle" =	336004
-"Nest® Protect Smoke + CO White Wired Alarm-USA" =	243684
-"YouTube Hard Cover Journal" =	198900
-"Android 17oz Stainless Steel Sport Bottle" =	151636
-"Nest® Protect Smoke + CO White Battery Alarm-USA" =	136392
-"Leatherette Journal" =	106865
-"26 oz Double Wall Insulated Bottle" =	97000
+"Nest® Cam Outdoor Security Camera - USA" = 	1238496<br>
+"Nest® Learning Thermostat 3rd Gen-USA - Stainless Steel" =	1225948<br>
+"Nest® Cam Indoor Security Camera - USA" =	1204926<br>
+"Google 17oz Stainless Steel Sport Bottle" =	336004<br>
+"Nest® Protect Smoke + CO White Wired Alarm-USA" =	243684<br>
+"YouTube Hard Cover Journal" =	198900<br>
+"Android 17oz Stainless Steel Sport Bottle" =	151636<br>
+"Nest® Protect Smoke + CO White Battery Alarm-USA" =	136392<br>
+"Leatherette Journal" =	106865<br>
+"26 oz Double Wall Insulated Bottle" =	97000<br>
 
 
 Question 2: 
