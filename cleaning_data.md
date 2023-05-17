@@ -40,7 +40,7 @@ SELECT COUNT(*) FROM all_sessions
 --WHERE searchkeyword IS NOT NULL
 --WHERE productvariant IS NOT NULL
 ```
-The syntax provided here is because I checked each column individually, but wanted to keep record of relevant queries; un-comment one line at a time to replicate my process. 
+The syntax provided here is because I checked each column individually, but wanted to keep record of relevant queries while conserving page space; un-comment one line at a time to replicate my process. 
 
 I also wanted to check the "currencycode" column:<br>
 ```
@@ -85,7 +85,7 @@ SELECT sbs.*, sr.productsku IS NOT NULL AS matching_sku
 FROM sales_by_sku AS sbs
 LEFT JOIN sales_report AS sr
 ON sbs.productsku = sr.productsku
-ORDER BY matching_sku
+ORDER BY matching_sku;
 ```
 This returned 8 false results. However, since key variable "productsku" was also present in the *products* and *all_sessions* tables, I decided to set up a query to check for any keys in this table that were not present in at least one other table. I did this by joining all four tables together:<br>
 ```
@@ -102,7 +102,7 @@ SELECT
   	OR sales_by_sku.productsku = products.sku
   ) AS matching_sku 
 FROM sales_by_sku
-ORDER BY matching_sku
+ORDER BY matching_sku;
 ```
 The same 8 records I noticed before were returned by this query. To be completely safe, I also checked to make sure there were no mismatches in the "total_ordered" columns in both *sales_by_sku* and *sales_report*:
 ```
@@ -110,7 +110,7 @@ SELECT sbs.*, sr.name, sr.total_ordered IS NOT NULL AS matching_sku
 FROM sales_by_sku AS sbs
 LEFT JOIN sales_report AS sr
 ON sbs.productsku = sr.productsku
-ORDER BY matching_sku
+ORDER BY matching_sku;
 ```
 This confirmed that there were no mismatches in the data, save for those 8 records that are stored only in *sales_by_sku*. I then deleted the table for being a waste of space: 
 ```
@@ -142,8 +142,28 @@ SET totaltransactionrevenue = (totaltransactionrevenue / 1000000), productprice 
 UPDATE all_sessions
 SET totaltransactionrevenue = ROUND(totaltransactionrevenue, 2), productprice = ROUND(productprice, 2);
 ```
-### Issue #4: Non-City/Country Names
+### Issue #4: Non-City/Country Names (all_sessions table)
+As stated above, some country names are listed as "(not set)", while some city names are either "(not set)" or "not available in demo dataset." For ease of use, all "(not set)" values should be NULL, while all "not available in demo dataset" values should be "N/A".
 
+NULL all instances of "(not set)":
+```
+--NULL unset countries
+UPDATE all_sessions
+SET country = NULL
+WHERE country = '(not set)';
+```
+```
+--NULL unset cities
+UPDATE all_sessions
+SET city = NULL
+WHERE city = '(not set)';
+```
+Replace all instances of "not available in demo dataset":
+```
+UPDATE all_sessions
+SET city = NULL
+WHERE city = '(not set)';
+```
 
 
 ### Issue #5: Name Formatting Errors
