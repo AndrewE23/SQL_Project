@@ -149,6 +149,7 @@ ORDER BY alls.country, order_set DESC
 LIMIT 10
 ```
 ```
+--by city
 SELECT 
 	alls.city || ', ' || alls.country AS location, 
 	alls.v2productname AS product_name, 
@@ -162,7 +163,7 @@ GROUP BY alls.city, alls.country, alls.v2productcategory, alls.v2productname
 ORDER BY alls.country, order_set DESC
 LIMIT 10
 ```
-Answer: One constraint of method is that it does not fully clean the v2productcategory values of url snippets, but that dataset is inconsistent anyhow so at least trimming any instances of "Home/" allows people to glean at the results and see which categories people shop for the most by country.
+Answer: One constraint of method is that it does not fully clean the v2productcategory values of url snippets, but that dataset is inconsistent anyhow so at least trimming any instances of "Home/" allows people to study the results and see which categories people shop for the most by country.
 
 This method gives us a useful insight; for example, products classed as lifestyle or accessory items are most frequently ordered from the site in Argentina. 
 
@@ -171,13 +172,34 @@ This method gives us a useful insight; for example, products classed as lifestyl
 
 
 SQL Queries:
+```
+--by country
+SELECT DISTINCT ON (country)
+	alls.country, 
+	alls.v2productname AS product_name, 
+	SUM(sr.total_ordered) AS most_sold
+FROM all_sessions AS alls
+JOIN sales_report AS sr
+ON alls.v2productname = sr.name
+WHERE country IS NOT NULL
+GROUP BY alls.country, alls.v2productname
+ORDER BY alls.country, most_sold DESC
+```
+```
+--by city
+SELECT DISTINCT ON (location)
+	alls.city || ', ' || alls.country AS location, 
+	alls.v2productname AS product_name, 
+	SUM(sr.total_ordered) AS most_sold
+FROM all_sessions AS alls
+JOIN sales_report AS sr
+ON alls.v2productname = sr.name
+WHERE country IS NOT NULL AND city != 'N/A'
+GROUP BY location, alls.v2productname
+ORDER BY location, most_sold DESC
+```
 
-
-
-Answer:
-
-
-
+Answer: This query returns only the first result based on the defined column, which in this case is "most_sold", for each country/city. With this data, we can determine which products do better in which locations, which can be useful from a marketing perspective.
 
 
 **Question 5: Can we summarize the impact of revenue generated from each city/country?**
@@ -186,7 +208,7 @@ SQL Queries:
 
 
 
-Answer: This question is vague, so I'm taking "impact" to mean  
+Answer: This question is vague, so I'm taking it to mean "which countries have the highest purchasing/ordering habits"; in other words, what are
 
 
 
