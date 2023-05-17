@@ -74,7 +74,7 @@ total_orders: 47851<br>
 
 
 **Question 3: How many orders in each category were made in Q2 of 2017 (from May 1st to July 31st)?**
-
+```
 SQL Queries:
 --focuses results on Q2 of 2017
 SELECT TRIM(LEADING 'Home/' FROM alls.v2productcategory), 
@@ -86,7 +86,7 @@ SELECT TRIM(LEADING 'Home/' FROM alls.v2productcategory),
   alls.date BETWEEN '2017-05-01' and '2017-07-31'
 GROUP BY alls.v2productcategory
 ORDER BY order_total DESC
-
+```
 Answer: Limiting it to the top 10 results for each category, we have:<br>
 "Shop by Brand/YouTube/" = 	14787<br>
 "Nest/Nest-USA/" =	7311<br>
