@@ -70,21 +70,6 @@ LIMIT 25
 ```
 --by city
 SELECT 
-	alls.city, 
-	AVG(sr.total_ordered)
-FROM sales_report AS sr
-JOIN all_sessions AS alls
-ON sr.productsku = alls.productsku
-WHERE 	
-	city IS NOT NULL 
-	AND city != 'N/A'
-GROUP BY alls.city
-ORDER BY avg DESC
-LIMIT 25
-```
-```
---by city
-SELECT 
     alls.city,
 	alls.country, 
     AVG(sr.total_ordered)
