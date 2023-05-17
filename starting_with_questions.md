@@ -11,7 +11,7 @@ SELECT
  country, 
  SUM(totaltransactionrevenue) AS transaction_by_country
 FROM all_SESSIONS
-WHERE transactions IS NOT NULL AND transactions > 0
+WHERE transactions IS NOT NULL AND transactions > 0 AND country != 'N/A'
 GROUP BY country 
 ORDER BY transaction_by_country DESC
 ```
@@ -62,7 +62,7 @@ SELECT alls.country, AVG(sr.total_ordered)
 FROM sales_report AS sr
 JOIN all_sessions AS alls
 ON sr.productsku = alls.productsku
-WHERE country IS NOT NULL
+WHERE country != 'N/A'
 GROUP BY country
 ORDER BY avg DESC
 LIMIT 25
@@ -76,8 +76,7 @@ FROM sales_report AS sr
 JOIN all_sessions AS alls
 ON sr.productsku = alls.productsku
 WHERE
-    city IS NOT NULL 
-    AND city != 'N/A'
+    city != 'N/A'
 GROUP BY alls.city, alls.country
 ORDER BY avg DESC
 LIMIT 15
@@ -143,7 +142,7 @@ SELECT
 FROM all_sessions AS alls
 JOIN sales_report AS sr
 ON alls.v2productname = sr.name
-WHERE country IS NOT NULL AND v2productcategory != '(not set)'
+WHERE country != 'N/A' AND v2productcategory != '(not set)'
 GROUP BY alls.country, alls.v2productcategory, alls.v2productname
 ORDER BY alls.country, order_set DESC
 LIMIT 10
@@ -158,7 +157,7 @@ SELECT
 FROM all_sessions AS alls
 JOIN sales_report AS sr
 ON alls.v2productname = sr.name
-WHERE country IS NOT NULL AND v2productcategory != '(not set)' AND city != 'N/A'
+WHERE country  != 'N/A' AND v2productcategory != '(not set)' AND city != 'N/A'
 GROUP BY alls.city, alls.country, alls.v2productcategory, alls.v2productname
 ORDER BY alls.country, order_set DESC
 LIMIT 10
@@ -181,7 +180,7 @@ SELECT DISTINCT ON (country)
 FROM all_sessions AS alls
 JOIN sales_report AS sr
 ON alls.v2productname = sr.name
-WHERE country IS NOT NULL
+WHERE country != 'N/A'
 GROUP BY alls.country, alls.v2productname
 ORDER BY alls.country, most_sold DESC
 ```
@@ -194,7 +193,7 @@ SELECT DISTINCT ON (location)
 FROM all_sessions AS alls
 JOIN sales_report AS sr
 ON alls.v2productname = sr.name
-WHERE country IS NOT NULL AND city != 'N/A'
+WHERE country != 'N/A' AND city != 'N/A'
 GROUP BY location, alls.v2productname
 ORDER BY location, most_sold DESC
 ```
@@ -212,7 +211,7 @@ WITH regionalorders AS (
   FROM all_sessions AS alls
   JOIN sales_report AS sr 
   ON alls.productsku = sr.productsku
-  WHERE country IS NOT NULL
+  WHERE country != 'N/A'
   GROUP BY country, total_ordered
 )
 --Grab and join data from CTE 
