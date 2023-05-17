@@ -73,7 +73,7 @@ total_orders: 47851<br>
 
 
 
-**Question 3: **
+**Question 3: How many orders in each category were made in Q2 of 2017 (from May 1st to July 31st)?**
 
 SQL Queries:
 
