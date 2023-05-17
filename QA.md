@@ -125,4 +125,4 @@ FROM all_sessions
 SELECT MIN(date), MAX(date)
 FROM analytics
 ```
-Both tables have dates that fall within acceptable ranged, and in both table's rows the data is already defined as a date so 
+Both tables have dates that fall within acceptable ranged, and in both table's columns the data is already defined and formatted as date type. 
