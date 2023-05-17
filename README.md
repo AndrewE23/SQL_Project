@@ -34,9 +34,9 @@ I kept three key main considerations in mind:
 
 ### 4 - Testing (and other considerations)
 At this point, the goal is really to keep testing what data you have until any anomalies you have are dealth with (and even then keep testing)! Some tactics to assist with this may include: <br>
-**a. Utilize data assertions**, maybe ensuring a user ID is properly stored and formatted or that a date makes sense.<br>
+**a. Specific value checks, especially for NULLs**, so that you can verify the accuracy and integrity of your data.<br>
 **b. Checking for invalid labels or categories**; your manager may not appreciate it if their title is stored as "manaher" or "walrus" rather than "manager".<br>
-**c. Specific value checks, especially for NULLs**, so that you can verify the accuracy and integrity of your data.<br>
+**c. Utilize data assertions**, maybe ensuring a user ID is properly stored and formatted or that a date makes sense.<br>
 
 ## Results
 While this dataset has many unknowns in it, it still provides enough information to let us gauge, for example:<br>
