@@ -1,4 +1,4 @@
-Question 1: What one item has been ordered the most?
+Question 1: Which items have been purchased the most, sorted by total price for all items?
 
 SQL Queries:
 ```
@@ -14,16 +14,16 @@ LIMIT 10
 ```
 
 Answer: 
->"Nest® Cam Outdoor Security Camera - USA"	1238496
-"Nest® Learning Thermostat 3rd Gen-USA - Stainless Steel"	1225948
-"Nest® Cam Indoor Security Camera - USA"	1204926
-"Google 17oz Stainless Steel Sport Bottle"	336004
-"Nest® Protect Smoke + CO White Wired Alarm-USA"	243684
-"YouTube Hard Cover Journal"	198900
-"Android 17oz Stainless Steel Sport Bottle"	151636
-"Nest® Protect Smoke + CO White Battery Alarm-USA"	136392
-"Leatherette Journal"	106865
-"26 oz Double Wall Insulated Bottle"	97000
+>"Nest® Cam Outdoor Security Camera - USA" = 	1238496
+"Nest® Learning Thermostat 3rd Gen-USA - Stainless Steel" =	1225948
+"Nest® Cam Indoor Security Camera - USA" =	1204926
+"Google 17oz Stainless Steel Sport Bottle" =	336004
+"Nest® Protect Smoke + CO White Wired Alarm-USA" =	243684
+"YouTube Hard Cover Journal" =	198900
+"Android 17oz Stainless Steel Sport Bottle" =	151636
+"Nest® Protect Smoke + CO White Battery Alarm-USA" =	136392
+"Leatherette Journal" =	106865
+"26 oz Double Wall Insulated Bottle" =	97000
 
 
 Question 2: 
