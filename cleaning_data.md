@@ -13,7 +13,7 @@ ii) The "socialengagementtype" column in *analytics* is also only ever one value
 
 >#3. Monetary amounts in various columns were not formatted like currency, needing to be divided by 1,000,000 and rounded to two decimal points to better reflect what they are.
 
->#4: In the *all_sessions* table, country is sometimes labelled "(not set)", and city is sometimes either "(not set)" or "not available in demo dataset". Any "(not set)" values can easily be replaced with NULL, while the other city string may have to be changed to "N/A" for ease of reading.
+>#4: In the *all_sessions* table, country is sometimes labelled "(not set)", and city is sometimes either "(not set)" or "not available in demo dataset". All such instances were changed to "N/A".
 
 >#5: Product name entries in the *products*, *sales_reports*, and *all_sessions* tables sometimes have extraneous spaces, and for ease of access all product names can also be reduced to lower case. 
 
@@ -84,13 +84,13 @@ NULL all instances of "(not set)":
 ```
 --NULL unset countries
 UPDATE all_sessions
-SET country = NULL
+SET country = 'N/A'
 WHERE country = '(not set)';
 ```
 ```
 --NULL unset cities
 UPDATE all_sessions
-SET city = NULL
+SET city = 'N/A'
 WHERE city = '(not set)';
 ```
 Replace all instances of "not available in demo dataset":
