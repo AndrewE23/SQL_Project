@@ -122,23 +122,25 @@ All monetary amounts are multiplied by 1,000,000 (i.e. prices and revenues), mea
 
 Update relevant analytics table numerics:
 ```
+--Divide by 1,000,000
 UPDATE analytics
 SET unit_price = (unit_price / 1000000), revenue = (revenue / 1000000);
 ```
-Convert to decimal value with a precision of 2:
 ```
+--Set to decimal precision to 2:
 UPDATE analytics
-SET unit_price = ROUND(unit_price, 2), revenue = ROUND(revenue, 2)
+SET unit_price = ROUND(unit_price, 2), revenue = ROUND(revenue, 2);
 ```
 Update relevant all_sessions table numerics:
 ```
+--Divide by 1,000,000
 UPDATE all_sessions
 SET totaltransactionrevenue = (totaltransactionrevenue / 1000000), productprice = (productprice / 1000000);
 ```
 ```
---Set to decimal values with a precision of 2:
+--Set to decimal precision to 2:
 UPDATE all_sessions
-SET totaltransactionrevenue = ROUND(totaltransactionrevenue, 2), productprice = ROUND(productprice, 2)
+SET totaltransactionrevenue = ROUND(totaltransactionrevenue, 2), productprice = ROUND(productprice, 2);
 ```
 ### Issue #4: Non-City/Country Names
 
