@@ -113,21 +113,21 @@ By Country:<br>
 "Mexico" =	35.13<br>
 
 By City:<br>
-"Riyadh, Saudi Arabia" = 	319.00
-"Brno, Czechia" =	319.00
-"Rexburg, United States" =	250.50
-"Sacramento, United States" =	189.00
-"Lisbon, Portugal" =	189.00
-"Kalamazoo, United States" =	105.00
-"Saint Petersburg, Russia" =	101.25
-"Avon, United States" =	100.00
-"Rome, Italy" =	97.75
-"Longtan District, Taiwan" =	97.00
-"Sherbrooke, Canada" =	97.00
-"Nashville, United States" =	94.00
-"Dubai, United Arab Emirates" =	89.20
-"Shinjuku, Japan" =	73.00
-"Pune, India" =	71.08
+"Riyadh, Saudi Arabia" = 	319.00<br>
+"Brno, Czechia" =	319.00<br>
+"Rexburg, United States" =	250.50<br>
+"Sacramento, United States" =	189.00<br>
+"Lisbon, Portugal" =	189.00<br>
+"Kalamazoo, United States" =	105.00<br>
+"Saint Petersburg, Russia" =	101.25<br>
+"Avon, United States" =	100.00<br>
+"Rome, Italy" =	97.75<br>
+"Longtan District, Taiwan" =	97.00<br>
+"Sherbrooke, Canada" =	97.00<br>
+"Nashville, United States" =	94.00<br>
+"Dubai, United Arab Emirates" =	89.20<br>
+"Shinjuku, Japan" =	73.00<br>
+"Pune, India" =	71.08<br>
 
 
 **Question 3: Is there any pattern in the types (product categories) of products ordered from visitors in each city and country?**
