@@ -132,12 +132,13 @@ By City:<br>
 
 **Question 3: Is there any pattern in the types (product categories) of products ordered from visitors in each city and country?**
 
-```
 SQL Queries:
+```
+--by country
 SELECT 
 	alls.country, 
 	alls.v2productname AS product_name, 
-	alls.v2productcategory, 
+	TRIM(LEADING 'Home/' FROM v2productcategory), 
 	SUM(sr.total_ordered) AS order_set
 FROM all_sessions AS alls
 JOIN sales_report AS sr
@@ -145,13 +146,25 @@ ON alls.v2productname = sr.name
 WHERE country IS NOT NULL AND v2productcategory != '(not set)'
 GROUP BY alls.country, alls.v2productcategory, alls.v2productname
 ORDER BY alls.country, order_set DESC
-LIMIT 50
+LIMIT 10
 ```
+```
+SELECT 
+	alls.city || ', ' || alls.country AS location, 
+	alls.v2productname AS product_name, 
+	TRIM(LEADING 'Home/' FROM v2productcategory), 
+	SUM(sr.total_ordered) AS order_set
+FROM all_sessions AS alls
+JOIN sales_report AS sr
+ON alls.v2productname = sr.name
+WHERE country IS NOT NULL AND v2productcategory != '(not set)' AND city != 'N/A'
+GROUP BY alls.city, alls.country, alls.v2productcategory, alls.v2productname
+ORDER BY alls.country, order_set DESC
+LIMIT 10
+```
+Answer: One constraint of method is that it does not fully clean the v2productcategory values of url snippets, but that dataset is inconsistent anyhow so at least trimming any instances of "Home/" allows people to glean at the results and see which categories people shop for the most by country.
 
-Answer: Stating one constraint of this 
-
-
-
+This method gives us a useful insight; for example, products classed as lifestyle or accessory items are most frequently ordered from the site in Argentina. 
 
 
 **Question 4: What is the top-selling product from each city/country? Can we find any pattern worthy of noting in the products sold?**
