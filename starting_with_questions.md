@@ -205,10 +205,28 @@ Answer: This query returns only the first result based on the defined column, wh
 **Question 5: Can we summarize the impact of revenue generated from each city/country?**
 
 SQL Queries:
+WITH regionalorders AS (
+  SELECT country, total_ordered, SUM(total_ordered) AS no_ordered
+  FROM all_sessions AS alls
+  JOIN sales_report AS sr 
+  ON alls.productsku = sr.productsku
+  WHERE country IS NOT NULL
+  GROUP BY country, total_ordered
+)
+SELECT alls.country, sales_report.total_ordered, 
+       100.0 * sales_report.total_ordered / SUM(sales_report.total_ordered) OVER () AS PercentageOfTotalSales
+FROM sales_report
+JOIN regionalorders 
+ON sales_report.total_ordered = regionalorders.total_ordered
+JOIN all_sessions AS alls
+ON alls.productsku = sales_report.productsku
+GROUP BY alls.country, sales_report.total_ordered
+ORDER BY percentageoftotalsales DESC
+LIMIT 20
 
 
 
-Answer: This question is vague, so I'm taking it to mean "which countries have the highest purchasing/ordering habits"; in other words, what are
+Answer: This question is vague, so I'm taking it to mean "which countries have purchased the highest percentage of products total?"
 
 
 
