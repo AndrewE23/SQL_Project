@@ -11,7 +11,7 @@ ii) The "socialengagementtype" column in *analytics* is also only ever one value
 
 >#2. The *sales_by_sku* table, which contained two columns ("productsku" and "total_ordered"), was entirely redundant. I first noticed that they were almost identical to two columns in the *sales_report* table, which prompted me to compare it with the three other tables that include a sku/productsku column. The verdict: All but 8 records had match in at least one other table. Since the table was worthless, I decided it would be better to simply delete it.
 
->#3: There are duplicate entries in the *all_sessions* and *analytics* tables. However, I was only able to work out a solution for *all_sessions*; the reasoning for this is explained in README.md.
+>#3: There are duplicate entries in the *analytics* table. They can be purged with a query involving "visitid" and "unit_price" in *analytics* or productprice in *all_sessions*.  
 
 >#4. Monetary amounts in various columns were not formatted like currency, needing to be divided by 1,000,000 and rounded to two decimal points to better reflect what they are.
 
@@ -120,15 +120,17 @@ DROP TABLE sales_by_sku;
 ```
 
 ### Issue #3: Deleting Duplicates
-I checked *sales_report*, *products*, and *all_sessions*, and *analytics*, and found duplicates only in the second of these two tables. *all_sessions* is cleaned with the following:
+I checked *sales_report*, *products*, and *all_sessions*, and *analytics*, and found duplicates only in *analytics* is cleaned with the following:
 ```
---productsku is the primary key, but visitid helps differentiate beween different sessions that we don't delete other users' sessions just for viewing the same pages
-DELETE FROM all_sessions2
+--The item's price is meant to be the primary key, but visitid helps differentiate between users
+DELETE FROM analytics
 	WHERE EXISTS (select 1
-              	FROM all_sessions2 t2
-              	WHERE t2.visitid = all_sessions2.visitid and
-					t2.productsku = all_sessions2.productsku and
-                    	t2.ctid > all_sessions2.ctid
+              	FROM analytics t2
+				JOIN all_sessions
+				ON t2.visitid = analytics.visitid
+              	WHERE t2.visitid = analytics.visitid and
+					t2.unit_price = all_sessions.productprice and
+                    	t2.ctid > analytics.ctid
              	);
 ```
 
@@ -176,8 +178,8 @@ WHERE city = '(not set)';
 Replace all instances of "not available in demo dataset":
 ```
 UPDATE all_sessions
-SET city = NULL
-WHERE city = '(not set)';
+SET city = 'N/A'
+WHERE city = 'not available in demo dataset';
 ```
 
 
