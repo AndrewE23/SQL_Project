@@ -11,7 +11,7 @@ ii) The "socialengagementtype" column in *analytics* is also only ever one value
 
 >#2. The *sales_by_sku* table, which contained two columns ("productsku" and "total_ordered"), was entirely redundant. I first noticed that they were almost identical to two columns in the *sales_report* table, which prompted me to compare it with the three other tables that include a sku/productsku column. The verdict: All but 8 records had match in at least one other table. Since the table was worthless, I decided it would be better to simply delete it.
 
->#3: There are duplicate entries in the *all_sessions* and *analytics* tables.
+>#3: There are duplicate entries in the *all_sessions* and *analytics* tables. However, I was only able to work out a solution for *all_sessions*; the reasoning for this is explained in README.md.
 
 >#4. Monetary amounts in various columns were not formatted like currency, needing to be divided by 1,000,000 and rounded to two decimal points to better reflect what they are.
 
@@ -130,17 +130,6 @@ DELETE FROM all_sessions
                     	t2.ctid > all_sessions.ctid
              	);
 ```
-
-The *analytics* table is denser withfar more duplicate information, but we have two identifiers that help sort out duplicate records; pageviews, and unit_price. The number of distinct unit_price values for each visitid should match the value in the pageviews column.
-```
-SELECT COUNT(*) FROM analytics
-	where exists (select 1
-              	from analytics t2
-              	where t2.unit_price = analytics.unit_price and
-				      t2.visitid = analytics.visitid
-             	);
-```
-# ***WIP***
 
 ### Issue #4: Monetary Amounts
 All monetary amounts are multiplied by 1,000,000 (i.e. prices and revenues), meaning I had to convert them to a more standard format.
