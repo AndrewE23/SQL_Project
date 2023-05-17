@@ -66,7 +66,7 @@ DROP COLUMN itemrevenue,
 DROP COLUMN transactionrevenue,
 DROP COLUMN productrevenue,
 DROP COLUMN transactionid,
-DROP COLUMN ecommerce_option,
+DROP COLUMN ecommerceaction_option,
 DROP COLUMN productvariant,
 DROP COLUMN currencycode;
 ```
@@ -123,27 +123,22 @@ All monetary amounts are multiplied by 1,000,000 (i.e. prices and revenues), mea
 Update relevant analytics table numerics:
 ```
 UPDATE analytics
-SET unit_price = (unit_price / 1000000),
-SET revenue = (revenue / 1000000);
+SET unit_price = (unit_price / 1000000), revenue = (revenue / 1000000);
 ```
 Convert to decimal value with a precision of 2:
 ```
 UPDATE analytics
-SET unit_price = ROUND(unit_price, 2),
-SET revenue = ROUND(revenue, 2)
+SET unit_price = ROUND(unit_price, 2), revenue = ROUND(revenue, 2)
 ```
-
 Update relevant all_sessions table numerics:
 ```
 UPDATE all_sessions
-SET totaltransactionrevenue = (unit_price / 1000000),
-SET productprice = (revenue / 1000000);
+SET totaltransactionrevenue = (totaltransactionrevenue / 1000000), productprice = (productprice / 1000000);
 ```
-Convert to decimal value with a precision of 2:
 ```
-UPDATE analytics
-SET totaltransactionrevenue = ROUND(unit_price, 2),
-SET productprice = ROUND(revenue, 2)
+--Set to decimal values with a precision of 2:
+UPDATE all_sessions
+SET totaltransactionrevenue = ROUND(totaltransactionrevenue, 2), productprice = ROUND(productprice, 2)
 ```
 ### Issue #4: Non-City/Country Names
 
