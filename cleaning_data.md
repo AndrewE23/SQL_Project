@@ -120,14 +120,15 @@ DROP TABLE sales_by_sku;
 ```
 
 ### Issue #3: Deleting Duplicates
-I checked *sales_report*, *products*, and *all_sessions*, and *analytics*, and found duplicates only in the second of these two tables. :
+I checked *sales_report*, *products*, and *all_sessions*, and *analytics*, and found duplicates only in the second of these two tables. *all_sessions* is cleaned with the following:
 ```
---visitid is the primary key, so that is what gets filtered
-DELETE FROM all_sessions
-	WHERE exists (select 1
-              	from all_sessions t2
-              	where t2.visitid = all_sessions.visitid and
-                    	t2.ctid > all_sessions.ctid
+--productsku is the primary key, but visitid helps differentiate beween different sessions that we don't delete other users' sessions just for viewing the same pages
+DELETE FROM all_sessions2
+	WHERE EXISTS (select 1
+              	FROM all_sessions2 t2
+              	WHERE t2.visitid = all_sessions2.visitid and
+					t2.productsku = all_sessions2.productsku and
+                    	t2.ctid > all_sessions2.ctid
              	);
 ```
 
