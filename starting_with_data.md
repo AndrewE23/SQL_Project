@@ -14,23 +14,62 @@ LIMIT 10
 ```
 
 Answer: 
-"Nest® Cam Outdoor Security Camera - USA" = 	1238496<br>
-"Nest® Learning Thermostat 3rd Gen-USA - Stainless Steel" =	1225948<br>
-"Nest® Cam Indoor Security Camera - USA" =	1204926<br>
-"Google 17oz Stainless Steel Sport Bottle" =	336004<br>
-"Nest® Protect Smoke + CO White Wired Alarm-USA" =	243684<br>
-"YouTube Hard Cover Journal" =	198900<br>
-"Android 17oz Stainless Steel Sport Bottle" =	151636<br>
-"Nest® Protect Smoke + CO White Battery Alarm-USA" =	136392<br>
-"Leatherette Journal" =	106865<br>
-"26 oz Double Wall Insulated Bottle" =	97000<br>
+"Nest® Cam Outdoor Security Camera - USA" = 	1,238,496<br>
+"Nest® Learning Thermostat 3rd Gen-USA - Stainless Steel" =	1,225,948<br>
+"Nest® Cam Indoor Security Camera - USA" =	1,204,926<br>
+"Google 17oz Stainless Steel Sport Bottle" =	336,004<br>
+"Nest® Protect Smoke + CO White Wired Alarm-USA" =	243,684<br>
+"YouTube Hard Cover Journal" =	198,900<br>
+"Android 17oz Stainless Steel Sport Bottle" =	151,636<br>
+"Nest® Protect Smoke + CO White Battery Alarm-USA" =	136,392<br>
+"Leatherette Journal" =	106,865<br>
+"26 oz Double Wall Insulated Bottle" =	97,000<br>
 
 
-**Question 2: **
+**Question 2: What are the total_orders for each category of channelgrouping? What do the results suggest about how effective one avenue of access to the site is for selling products to people?**
 
 SQL Queries:
+```
+SELECT 
+  DISTINCT alls.channelgrouping, 
+  COUNT(alls.channelgrouping), 
+  SUM(sr.total_ordered) AS total_orders
+FROM all_sessions AS alls
+JOIN sales_report AS sr
+ON alls.productsku = sr.productsku
+WHERE total_ordered != 0
+GROUP BY channelgrouping
+```
 
-Answer:
+Answer: The top pulls to the website by far are organic searches, followed by people who had bookmarked the site or a page on it prior to purchasing, and then referrals. This suggests that people only come to the site when they are actively looking for something, and that other channel groupings are not nearly as effective at drawing in new customers.
+
+**"(Other)"**<br>
+Count: 4<br>
+total_orders: 48<br>
+
+**"Affiliates"**<br>
+Count: 140<br>
+total_orders: 4806<br>
+
+**"Direct"**<br>
+Count: 1493<br>
+total_orders: 44154<br>
+
+**"Display"**<br>
+Count: 70<br>
+total_orders: 2369<br>
+
+**"Organic Search"**<br>	
+Count: 4216<br>
+total_orders: 104747<br>
+
+**"Paid Search"**<br>
+Count: 274<br>
+total_orders: 6628<br>
+
+**"Referral"**<br>	
+Count: 1414<br>
+total_orders: 47851<br>
 
 
 
