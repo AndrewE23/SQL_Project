@@ -1,4 +1,4 @@
-Question 1: Which items have been purchased the most, sorted by total price for all items?
+**Question 1: Which items have been purchased the most, sorted by total price for all items?**
 
 SQL Queries:
 ```
@@ -26,7 +26,7 @@ Answer:
 "26 oz Double Wall Insulated Bottle" =	97000<br>
 
 
-Question 2: 
+**Question 2: **
 
 SQL Queries:
 
@@ -34,7 +34,7 @@ Answer:
 
 
 
-Question 3: 
+**Question 3: **
 
 SQL Queries:
 
