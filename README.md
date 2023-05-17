@@ -19,10 +19,10 @@ The very first thing I needed to do was to form an accurate definition of what t
 Then, using a combination of LHL-provided and online reference materials for assistance, I devised a simple 5-step process for cleaning my data.<br>
 
 ### 2 - Validation
-I kept three key main considerations in mind:
-**a. Data should be as complete as possible**. In short, I ran queries to see if I had NULL values, verified that unused contents were actually unused (or else barely used), and so forth.
-**b. Data should be unique.** If it isn't, then you run the risk if skewing or distorting any observations you make with the data available to you.
-**c. Data should be consistent.** Typos should be cleared, value formatting standardized, and so on. Basically, we want everything to be comprehensible at a glance and to know that it will continue making sense.
+I kept three key main considerations in mind:<br>
+**a. Data should be as complete as possible**. In short, I ran queries to see if I had NULL values, verified that unused contents were actually unused (or else barely used), and so forth.<br>
+**b. Data should be unique.** If it isn't, then you run the risk if skewing or distorting any observations you make with the data available to you.<br>
+**c. Data should be consistent.** Typos should be cleared, value formatting standardized, and so on. Basically, we want everything to be comprehensible at a glance and to know that it will continue making sense.<br>
 
 ### 3 - Data Cleaning
 **a. Remove irrelevant data (from the source)**, such as empty columns.<br>
