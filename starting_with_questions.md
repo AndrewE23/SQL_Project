@@ -132,12 +132,23 @@ By City:<br>
 
 **Question 3: Is there any pattern in the types (product categories) of products ordered from visitors in each city and country?**
 
-
+```
 SQL Queries:
+SELECT 
+	alls.country, 
+	alls.v2productname AS product_name, 
+	alls.v2productcategory, 
+	SUM(sr.total_ordered) AS order_set
+FROM all_sessions AS alls
+JOIN sales_report AS sr
+ON alls.v2productname = sr.name
+WHERE country IS NOT NULL AND v2productcategory != '(not set)'
+GROUP BY alls.country, alls.v2productcategory, alls.v2productname
+ORDER BY alls.country, order_set DESC
+LIMIT 50
+```
 
-
-
-Answer:
+Answer: Stating one constraint of this 
 
 
 
