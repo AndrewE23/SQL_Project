@@ -1,7 +1,7 @@
 # Final-Project-Transforming-and-Analyzing-Data-with-SQL
 
 ## Project/Goals
-Ultimately, my goal is to transform the data that has been made available to me into a dataset that can be relied on for delivering hard results and solid insights. What this means is it needs to be cleaned up; duplicates removed, useless info purged, and inconsistencies made consistent. After that, I want to be able to use the data to reliably answer different questions I may have like: What products are the most purchased? How many people actually buy things as opposed to simply view products? 
+Ultimately, my goal was to transform the data that has been made available to me into a dataset that can be relied on for delivering hard results and solid insights. What this means is it needs to be cleaned up; duplicates removed, useless info purged, and inconsistencies made consistent. After that, I want to be able to use the data to reliably answer different questions I may have like: What products are the most purchased? How many people actually buy things as opposed to simply view products? The final dataset should be coherent
 
 ## Process
 ### 1 - Assessment
@@ -18,7 +18,7 @@ The very first thing I needed to do was to form an accurate definition of what t
 
 Then, using a combination of LHL-provided and online reference materials for assistance, I devised a simple 5-step process for cleaning my data.<br>
 
-### 2 - Data Validation Process
+### 2 - Data Cleaning Process
 **a. Remove irrelevant data (from the source)**, such as empty columns.<br>
 **b. Remove or filter duplicate data**, such as copied rows.<br>
 **c. Remedy data inconsistencies**, such as matching data values or types that have been entered inconsistently.<br>
@@ -26,12 +26,13 @@ Then, using a combination of LHL-provided and online reference materials for ass
 **e. Resolve issues with data gaps**, whether that means filling in what NULL values I can with the data available or else filtering related results out, depending on what is needed of the data.<br>
 > Note: In a work setting, I could also attempt to resolve data gap problems by seeking out the missing data (i.e. collecting more data to fill in any gaps present). This would be a validation stage, but is not part of my process for this project.
 
+### 3 - Data Validation
 
 ## Results
 (fill in what you discovered this data could tell you and how you used the data to answer those questions)
 
 ## Challenges 
-(discuss challenges you faced in the project)
+
 
 ## Future Goals
-(what would you do if you had more time?)
+I would try to normalize the table in a way where much of the data that is repeated (especially in the *analytics* table) would not be present; I do not need multiple copies of a record because someone looked at a particular item multiple times in a row.
