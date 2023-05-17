@@ -102,16 +102,6 @@ WHERE city = 'not available in demo dataset';
 
 
 ### Issue #5: Name Formatting Errors
-First, I checked for extra spaces in product names.
-```
---Check for leading, extra spaces
---Note that I adapted this query for all_sessions and products as well
-SELECT COUNT(name)
-FROM sales_report
-WHERE name ILIKE '%  %'
-OR name ILIKE ' %'
-```
-Then I removed them:<br>
 Remove extra spaces from "name" column in *sales_report*: 
 ```
 --Remove leading spaces
