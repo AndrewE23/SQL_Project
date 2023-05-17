@@ -24,7 +24,6 @@ Below, provide the SQL queries you used to clean your data.<br>
 
 ### Issue #1: Remove Irrelevant Data
 Focus: **all_sessions**<br>
-Column Deletion:<br>
 ```
 ALTER TABLE all_sessions
 DROP COLUMN searchkeyword,
